@@ -13,9 +13,9 @@
                     <x-icon name="users" class="mr-2" solid mini /><span class="text-base font-semibold">Listado de
                         Usuarios</span>
                 </div>
-                <button class="btn btn-outline btn-primary md:btn-sm md:h-full py-0">
+                <a class="btn btn-outline btn-primary md:btn-sm md:h-full py-0" href="{{ route('admin.usuarios.create') }}">
                     <x-icon name="user-plus" class="mr-2" solid mini />Agregar usuario
-                </button>
+                </a>
             </div>
             <div class="divider my-0"></div>
             <form method="GET" action="{{ route('admin.usuarios.index') }}" accept-charset="UTF-8">

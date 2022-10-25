@@ -44,7 +44,20 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $usuario = new User();
+        return view('dashboard.admin.users.create', [
+            'filterOptions' => [
+                'condicion' => [
+                    'selected' => $usuario->roles->first()?->name ?? Str::lower(User::CONDITION_PROVIDER),
+                    'options' => [
+                        Str::lower(User::CONDITION_SUPER_ADMIN) => Str::title(User::CONDITION_SUPER_ADMIN),
+                        Str::lower(User::CONDITION_ADMIN) => Str::title(User::CONDITION_ADMIN),
+                        Str::lower(User::CONDITION_PROVIDER) => Str::title(User::CONDITION_PROVIDER),
+                    ]
+                ]
+            ],
+            'data' => $usuario
+        ]);
     }
 
     /**
@@ -55,7 +68,10 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        //
+        $usuario = new User();
+        $usuario->update($request->all());
+        $usuario->save();
+        return redirect()->route('admin.usuarios.index')->with('status', 'Usuario actualizado!');
     }
 
     /**

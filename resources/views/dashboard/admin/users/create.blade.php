@@ -5,7 +5,7 @@
         <div class="card-body px-2 py-4 md:p-5 gap-6">
             <div class="flex flex-col md:flex-row gap-4 justify-between">
                 <div class="badge badge-primary self-center md:self-start py-5 w-full md:w-auto">
-                    <x-icon name="users" class="mr-2" solid mini /><span class="text-base font-semibold">Editar
+                    <x-icon name="users" class="mr-2" solid mini /><span class="text-base font-semibold">Crear usuario
                         Usuario</span>
                 </div>
                 <button class="btn btn-outline btn-primary md:btn-sm md:h-full py-0">
@@ -15,13 +15,14 @@
             <div class="overflow-x-auto w-full">
                 <div>
                     <div class="flex flex-col gap-6">
-                        <form method="POST" action="{{ route('admin.usuarios.update', $data) }}" accept-charset="UTF-8">
-                            {{ method_field('PUT') }}
+                        <form method="POST" action="{{ route('admin.usuarios.create') }}" accept-charset="UTF-8">
                             @csrf
 
                             <div class="form-control mb-3">
-                                <x-float-input type="email" id="email" name="email" label="Email"
-                                    value="{{ $data->email }}" />
+                                <x-float-input type="email" id="email" name="email" label="Email de usuario" />
+                            </div>
+                            <div class="form-control mb-3">
+                                <x-float-input type="password" id="password" name="password" label="Clave de usuario" />
                             </div>
 
                             <div class="flex flex-col w-full border-opacity-50">
