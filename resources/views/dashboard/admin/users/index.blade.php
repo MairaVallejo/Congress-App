@@ -114,10 +114,15 @@
         <div class="modal">
             <div class="modal-box relative">
                 <label for="modal-delete-{id}" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-                <h3 class="text-lg font-bold">Congratulations random Internet user!</h3>
-                <p class="py-4">You've been selected for a chance to get one year of subscription to use Wikipedia for
-                    free!
-                </p>
+                <h3 class="text-lg font-bold">¿Seguro de eliminar al Usuario?</h3>
+                <p class="py-4">Una vez hecho, no se puede deshacer...</p>
+                <form action="usuarios/{id}" method="post">
+                    @csrf
+                    @method('delete')
+                    <button class="modal-button btn btn-error btn-outline" type="submit">
+                        <x-icon name="trash" class="mr-2" solid mini />Remover
+                    </button>
+                </form>
             </div>
         </div>
     </template>

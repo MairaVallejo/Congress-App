@@ -103,7 +103,7 @@ class UserController extends Controller
     {
         $usuario->update($request->all());
         $usuario->save();
-        return redirect()->route('admin.usuarios.index')->with('update', 'Student has been updated!');
+        return redirect()->route('admin.usuarios.index')->with('status', 'Usuario actualizado!');
     }
 
     /**
@@ -112,8 +112,9 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(User $usuario)
     {
-        //
+        $usuario->delete();
+        return redirect()->route('admin.usuarios.index')->with('status', 'Usuario eliminado!');
     }
 }
