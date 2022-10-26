@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
@@ -44,19 +47,17 @@ class UserController extends Controller
      */
     public function create()
     {
-        $usuario = new User();
         return view('dashboard.admin.users.create', [
             'filterOptions' => [
                 'condicion' => [
-                    'selected' => $usuario->roles->first()?->name ?? Str::lower(User::CONDITION_PROVIDER),
+                    'selected' => Str::lower(User::CONDITION_PROVIDER),
                     'options' => [
                         Str::lower(User::CONDITION_SUPER_ADMIN) => Str::title(User::CONDITION_SUPER_ADMIN),
                         Str::lower(User::CONDITION_ADMIN) => Str::title(User::CONDITION_ADMIN),
                         Str::lower(User::CONDITION_PROVIDER) => Str::title(User::CONDITION_PROVIDER),
                     ]
                 ]
-            ],
-            'data' => $usuario
+            ]
         ]);
     }
 
@@ -68,10 +69,13 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $usuario = new User();
-        $usuario->update($request->all());
-        $usuario->save();
-        return redirect()->route('admin.usuarios.index')->with('status', 'Usuario actualizado!');
+        $input = array_filter($request->all());
+        if (Arr::has($input, 'password')) {
+            $input['password'] = Hash::make($input['password']);
+        }
+        $usuario = User::create($input);
+        $usuario->syncRoles(Str::lower(User::CONDITION_PROVIDER) === $input['role'] ? [] : [$input['role']]);
+        return redirect()->route('admin.usuarios.index')->with('status', 'Usuario creado!');
     }
 
     /**
@@ -96,7 +100,7 @@ class UserController extends Controller
         return view('dashboard.admin.users.edit', [
             'filterOptions' => [
                 'condicion' => [
-                    'selected' => $usuario->roles->first()?->name ?? Str::lower(User::CONDITION_PROVIDER),
+                    'selected' => Str::lower($usuario->roles->first()?->name ?? User::CONDITION_PROVIDER),
                     'options' => [
                         Str::lower(User::CONDITION_SUPER_ADMIN) => Str::title(User::CONDITION_SUPER_ADMIN),
                         Str::lower(User::CONDITION_ADMIN) => Str::title(User::CONDITION_ADMIN),
@@ -117,7 +121,14 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $usuario)
     {
-        $usuario->update($request->all());
+        $input = array_filter($request->all());
+        if (Arr::has($input, 'password')) {
+            $input['password'] = Hash::make($input['password']);
+        }
+        if (Arr::has($input, 'role')) {
+            $usuario->syncRoles(Str::lower(User::CONDITION_PROVIDER) === $input['role'] ? [] : [$input['role']]);
+        }
+        $usuario->update($input);
         $usuario->save();
         return redirect()->route('admin.usuarios.index')->with('status', 'Usuario actualizado!');
     }

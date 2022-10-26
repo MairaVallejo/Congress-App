@@ -39,7 +39,8 @@
                     <!-- head -->
                     <thead>
                         <tr>
-                            <td><label>Usuario</label></td>
+                            <td><label>ID</label></td>
+                            <th><label>Nombre</label></th>
                             <th><label>E-Mail</label></th>
                             <th><label>Condición</label></th>
                             <th><label class="float-right">Acciones</label></th>
@@ -48,23 +49,8 @@
                     <tbody>
                         @forelse($data as $item)
                             <tr data-id="{{ $item->id }}">
-                                <td>
-                                    <div class="flex flex-col gap-1">
-                                        <div class="flex flex-row gap-0">
-                                            <span
-                                                class="badge badge-primary rounded-r-none">Código&nbsp;{{ $data->cod_prov ?? "Local - $item->id" }}</span>
-                                            <span
-                                                class="badge badge-ghost rounded-l-none">C.U.I.T.&nbsp;{{ $item->cuit }}</span>
-                                        </div>
-                                        @forelse($item->roles->pluck('name') as $role)
-                                            <span class="badge badge-accent">{{ $role }}</span>
-                                        @empty
-                                            <div class="flex flex-col gap-0">
-                                                <span class="badge badge-ghost rounded-bl-none">Sin Roles</span>
-                                            </div>
-                                        @endforelse
-                                    </div>
-                                </td>
+                                <td>{{ $item->id }}</td>
+                                <td>{{ $item->name }}</td>
                                 <td>{{ $item->email }}</td>
                                 <td>
                                     <div class="flex flex-col gap-1">

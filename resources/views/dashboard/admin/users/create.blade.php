@@ -8,21 +8,30 @@
                     <x-icon name="users" class="mr-2" solid mini /><span class="text-base font-semibold">Crear usuario
                         Usuario</span>
                 </div>
-                <button class="btn btn-outline btn-primary md:btn-sm md:h-full py-0">
+                <a class="btn btn-outline btn-primary md:btn-sm md:h-full py-0" href="{{ route('admin.usuarios.index') }}">
                     <x-icon name="arrow-uturn-left" class="mr-2" solid mini />Volver
-                </button>
+                </a>
             </div>
             <div class="overflow-x-auto w-full">
                 <div>
                     <div class="flex flex-col gap-6">
-                        <form method="POST" action="{{ route('admin.usuarios.create') }}" accept-charset="UTF-8">
+                        <form method="POST" action="{{ route('admin.usuarios.store') }}" accept-charset="UTF-8">
                             @csrf
 
                             <div class="form-control mb-3">
-                                <x-float-input type="email" id="email" name="email" label="Email de usuario" />
+                                <x-float-input type="email" id="email" name="email" label="Email del usuario"
+                                    value="{{ old('email') }}" />
                             </div>
                             <div class="form-control mb-3">
-                                <x-float-input type="password" id="password" name="password" label="Clave de usuario" />
+                                <x-float-input type="text" id="name" name="name" label="Nombre del usuario"
+                                    value="{{ old('name') }}" />
+                            </div>
+                            <div class="form-control mb-3">
+                                <x-float-select id="role" name="role" label="Rol del usuario" :values="$filterOptions['condicion']['options']"
+                                    :selected="$filterOptions['condicion']['selected']" />
+                            </div>
+                            <div class="form-control mb-3">
+                                <x-float-input type="password" id="password" name="password" label="Clave del usuario" />
                             </div>
 
                             <div class="flex flex-col w-full border-opacity-50">
