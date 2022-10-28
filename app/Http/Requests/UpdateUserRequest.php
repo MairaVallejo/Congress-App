@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\User;
 use Illuminate\Validation\Rule;
+use Laravel\Fortify\Rules\Password;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -33,6 +34,15 @@ class UpdateUserRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class, 'email')->ignore($this->route('usuario'), 'id'),
             ],
+            'name' => [
+                'required',
+                'string'
+            ],
+            'password' => [
+                'nullable',
+                'string',
+                new Password
+            ]
         ];
     }
 }
