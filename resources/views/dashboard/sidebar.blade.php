@@ -12,6 +12,11 @@
                     <x-icon name="users" class="fill-info" solid />Listado de Usuarios
                 </a>
             </li>
+            <li>
+                <a href="{{ route('admin.etiquetas.index') }}">
+                    <x-icon name="list-bullet" class="fill-info" solid />Listado de Etiquetas
+                </a>
+            </li>
         @endrole
     </ul>
     <div>

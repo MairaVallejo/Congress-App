@@ -14,6 +14,11 @@
         </div>
 
         <div class="form-control">
+            <x-float-input class="mb-3" type="text" id="name" name="name" label="Nombre del Usuario"
+                value="{{ old('name') }}" />
+        </div>
+
+        <div class="form-control">
             <x-float-input class="mb-3" type="password" id="password" name="password" label="Contraseña" />
             <x-float-input class="mb-3" type="password" id="password_confirmation" name="password_confirmation"
                 label="Confirmar contraseña" />

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\EtiquetaController as AdminEtiquetaController;
 use Illuminate\Http\Request;
 
 
@@ -24,6 +25,12 @@ Route::middleware(['auth'])->group(function () {
     Route::name('admin.')->prefix('admin')->group(function () {
         Route::middleware(['can:Usuarios'])->resource('usuarios', AdminUserController::class)->missing(function (Request $request) {
             return redirect(route('admin.usuarios.index'))->with('status', 'El usuario no existe!');
+        });
+    });
+
+    Route::name('admin.')->prefix('admin')->group(function () {
+        Route::middleware(['can:Usuarios'])->resource('etiquetas', AdminEtiquetaController::class)->missing(function (Request $request) {
+            return redirect(route('admin.etiquetas.index'))->with('status', 'El usuario no existe!');
         });
     });
 });

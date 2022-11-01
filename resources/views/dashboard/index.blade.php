@@ -18,7 +18,7 @@
 
                     <div class="bordered">
                         <h3 class="text-base flex flex-col w-full gap-0 py-1">
-                            <span class="text-sm font-bold w-full rounded-none flex flex-row gap-1">Razón Social</span>
+                            <span class="text-sm font-bold w-full rounded-none flex flex-row gap-1">Nombre</span>
                             <span
                                 class="badge badge-primary badge-outline badge-md font-semibold w-full rounded-none">{{ Auth()->user()->name }}</span>
                         </h3>
